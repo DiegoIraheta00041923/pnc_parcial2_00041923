@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.request.CreateMagicArticleRequest;
+import com.example.demo.domain.request.UpdateMagicArticleRequest;
+import com.example.demo.domain.request.UpdateMagicProviderRequest;
 import com.example.demo.domain.response.GeneralResponse;
 import com.example.demo.service.MagicArticleServiceImp;
 import lombok.AllArgsConstructor;
@@ -28,6 +30,15 @@ public class MagicArticleController {
         );
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<GeneralResponse> updateArticle(@PathVariable UUID id, @RequestBody UpdateMagicArticleRequest request){
+        return buildResponse(
+                "Magic Provider updated!",
+                HttpStatus.OK,
+                magicArticleImp.updateMagicArticle(id,request)
+        );
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<GeneralResponse> deleteArticle(@PathVariable UUID id){
         return buildResponse("Article deleted!",
@@ -36,7 +47,7 @@ public class MagicArticleController {
     }
 
 
-    
+
     public ResponseEntity<GeneralResponse> buildResponse(String message, HttpStatus status, Object data) {
         String uri = ServletUriComponentsBuilder.fromCurrentRequestUri().build().getPath();
         return ResponseEntity
