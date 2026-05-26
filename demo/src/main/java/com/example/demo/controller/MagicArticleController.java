@@ -30,10 +30,17 @@ public class MagicArticleController {
         );
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<GeneralResponse> getArticle(@PathVariable UUID id){
+        return buildResponse("Magic Article found!",
+                HttpStatus.OK,
+                magicArticleImp.getMagicArticleById(id));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<GeneralResponse> updateArticle(@PathVariable UUID id, @RequestBody UpdateMagicArticleRequest request){
         return buildResponse(
-                "Magic Provider updated!",
+                "Magic Article updated!",
                 HttpStatus.OK,
                 magicArticleImp.updateMagicArticle(id,request)
         );
